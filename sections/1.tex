@@ -1,0 +1,15 @@
+The first packet will wait, on average, the sum of the interarrival times between
+it and the $50^{th}$ packet. Since the packets arrive in a Poisson fashion, the
+interarrival times are exponentially distributed. Due to the memoryless property
+of the exponential distribution, the mean interarrival time between packets is
+$$E[T] = \dfrac{1}{\lambda} = 1\ \text{ms}$$
+
+Hence, the mean waiting time for the first packet is
+$$\overline{T}_w = \sum_{i=1}^{50-1} E[T] = \dfrac{49}{\lambda} = 49\ \text{ms}$$
+
+The probability that $k$ packets are transmitted in a time interval of
+$\Delta t = 10\ \text{ms}$ is
+$$P_k = \dfrac{(\lambda \Delta t)^k}{k!}e^{-\lambda \Delta t} = \dfrac{10^k}{k!}e^{-10}$$
+
+The average number of packets in a block is
+$$E[P] = \lambda \Delta t = 10\ \text{packets/block}$$
