@@ -11,7 +11,8 @@
 	\caption{The Markovian chain describing the system}
 \end{figure}
 
-Considering local balance equations we get
+A state is defined by the number of packets in the system. Considering local
+balance equations we get
 
 \begin{align*}
   \lambda \pi_0 &= \mu \pi_1 \Leftrightarrow \pi_1 = \dfrac{\lambda}{\mu}\pi_0\\
@@ -48,12 +49,34 @@ and, in general, the probability that there are $i$ packets in the system
 
 $$\pi_i = \Big(\dfrac{\lambda}{\mu}\Big)^i(1 - \dfrac{\lambda}{\mu}) = 0.5^{i+1}$$
 
-The average number of packets waiting for transmission $N$ is the average number
-of packets in the queue, hence
 
-$$N = \sum_{i=2}^{\infty} i \cdot \pi_i = \sum_{i=2}^{\infty} i \cdot \Big(\dfrac{\lambda}{\mu}\Big)^i \cdot \pi_0 =
-0.5 \sum_{i=2}^{\infty} i \cdot \Big(\dfrac{1}{2}\Big)^i = 0.5 \cdot 1.5 = 0.75$$
+The average number of packets waiting for transmission $N_q$ is the average
+number of packets in the queue, which is
 
-Where the starting condition is $i=2$ because waiting for transmission means that
-there is at least one packet in the queue, and for that to happen there is
-exactly one packet being transmitted in the server.
+\begin{equation}
+  N_q = N - N_s
+  \label{eq:4.1}
+\end{equation}
+
+where $N$ is the average number of packets in the system, and $N_s$ is the
+average number of packets being transmitted. Hence, finding $N_q$ means finding
+$N$ and $N_s$.
+
+The average number of packets in the system is defined as
+
+\begin{align*}
+  N &= \sum_{i=0}^{\infty} i \cdot \pi_i = \sum_{i=0}^{\infty} i \Big(\dfrac{\lambda}{\mu}\Big)^i \pi_0 =
+  \pi_0 \sum_{i=0}^{\infty} i \Big(\dfrac{\lambda}{\mu}\Big)^i \\
+  ~ &= \pi_0 \Big(\dfrac{\lambda}{\mu}\Big) \sum_{i=0}^{\infty} i \Big(\dfrac{\lambda}{\mu}\Big)^{i-1} =
+  \pi_0 \rho \sum_{i=0}^{\infty} i \rho^{i-1} \\
+  ~ &= \pi_0 \rho \sum_{i=0}^{\infty} \dfrac{d(\rho^i)}{d\rho} = \pi_0 \rho \dfrac{d}{d\rho} \Big(\sum_{i=0}^{\infty} \rho^i \Big) \\
+  ~ &= \pi_0 \rho \dfrac{d}{d\rho} \Big(\dfrac{1}{1-\rho}\Big) = (1-\rho) \rho \dfrac{1}{(1-\rho)^2} = \dfrac{\rho}{1-\rho} \\
+  ~ &= \dfrac{\lambda}{\mu - \lambda} = \dfrac{500}{1000-500} = 1\ \text{packet}
+\end{align*}
+
+The average number of packets under transmission is
+$$N_s = \dfrac{\lambda}{\mu} = \dfrac{500}{1000} = 0.5\ \text{packets}$$
+
+Hence, from equation \ref{eq:4.1}:
+
+$$N_q = \dfrac{\lambda}{\mu - \lambda} - \dfrac{\lambda}{\mu} = 1 - 0.5 = 0.5\ \text{packets}$$
