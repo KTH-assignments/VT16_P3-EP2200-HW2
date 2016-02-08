@@ -1,3 +1,4 @@
+a)
 \begin{figure}[H]
 	\centering
 	\scalebox{0.8}{\input{./figures/4.1.tex}}
@@ -11,6 +12,7 @@
 	\caption{The Markovian chain describing the system}
 \end{figure}
 
+b)
 A state is defined by the number of packets in the system. Considering local
 balance equations we get
 
@@ -79,4 +81,20 @@ $$N_s = \dfrac{\lambda}{\mu} = \dfrac{500}{1000} = 0.5\ \text{packets}$$
 
 Hence, from equation \ref{eq:4.1}:
 
-$$N_q = \dfrac{\lambda}{\mu - \lambda} - \dfrac{\lambda}{\mu} = 1 - 0.5 = 0.5\ \text{packets}$$
+$$N_q = 1 - 0.5 = 0.5\ \text{packets}$$
+
+c)
+The probability of at least $n$ packets existing in the system is equivalent to
+that of 1 minus the probability of $n-1$ existing in the system at most:
+$$P(k \geq n) = 1 - P(k < n) = 1 - P(k \leq n-1)$$
+
+But
+\begin{align*}
+  P(k \leq n-1) &= \sum_{k=0}^{n-1} \pi_i = \sum_{k=0}^{n-1} (1-\dfrac{\lambda}{\mu})\Big(\dfrac{\lambda}{\mu}\Big)^k \\
+  ~             &= (1-\dfrac{\lambda}{\mu})\sum_{k=0}^{n-1} \Big(\dfrac{\lambda}{\mu}\Big)^k =
+                   (1-\dfrac{\lambda}{\mu}) \dfrac{1-\Big(\dfrac{\lambda}{\mu}\Big)^n}{1-\dfrac{\lambda}{\mu}} \\
+  ~             &= 1-\Big(\dfrac{\lambda}{\mu}\Big)^n
+\end{align*}
+
+Hence
+$$P(k \geq n) = 1 - P(k \leq n-1) = \Big(\dfrac{\lambda}{\mu}\Big)^n = 0.5^n$$
