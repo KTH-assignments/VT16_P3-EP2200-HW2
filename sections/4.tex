@@ -84,8 +84,8 @@ Hence, from equation \ref{eq:4.1}:
 $$N_q = 1 - 0.5 = 0.5\ \text{packets}$$
 
 c)
-The probability of at least $n$ packets existing in the system is equivalent to
-that of 1 minus the probability of $n-1$ existing in the system at most:
+The probability of at least $n$ packets existing in the system is equal to that
+of 1 minus the probability of $n-1$ existing in the system at most:
 $$P(k \geq n) = 1 - P(k < n) = 1 - P(k \leq n-1)$$
 
 But
@@ -98,3 +98,70 @@ But
 
 Hence
 $$P(k \geq n) = 1 - P(k \leq n-1) = \Big(\dfrac{\lambda}{\mu}\Big)^n = 0.5^n$$
+
+Intuitively, this makes sense, since the probability of the system having at
+least 0 packets is 1, and as the number of packets in the condition increases,
+the probability decreases, since the system is stable.
+
+d)
+The arriving packet will have to wait for transmission for the duration of $k$
+transmission times, supposing that $k$ packets are in the system, $1$ being
+transmitted and $k-1$ waiting for transmission in the queue. These times are
+distributed exponentially. Assuming $X_i, 1 \leq i \leq k$ is a random variable,
+independent of all $X_j, i \neq j$ describing the service time of the $i^{th}$
+packet, then the waiting time for packet $k+1$ will be the sum of $X_i$:
+$$W = X_1 + X_2 + \dots + X_k = \sum_{i=1}^{k}X_i$$
+
+The addition of $X_1$, although the first packet is assumed to be in transmission
+is made because of the memoryless property of the exponential distribution.
+
+This summation of random variables denotes their convolution in time, or
+multiplication in the (continuous) Laplace domain. The probability density
+function of $X_i$ is
+$$f_{X_i}(t) = \mu e^{-\mu t}$$
+
+and its Laplace transform is
+
+$$f^{*}_{T_i}(s) = \mu \dfrac{1}{s+\mu}$$
+
+Hence the probability density function of the waiting time $W$ of packet $k+1$ in
+the Laplace domain, given that there are $k$ packets in the system is
+
+$$f_W(s | k) = \prod_{i=1}^k f^{*}_{T_i}(s) = \prod_{i=1}^k \dfrac{\mu}{s+\mu} = \Big(\dfrac{\mu}{s+\mu}\Big)^k$$
+
+The probability density function of the waiting time $W$ will thus be the
+marginalization over all possible values of $k$, starting from $k=1$ because
+in order for waiting time to exist, there should be one packet under
+transmission in the server
+
+\begin{align*}
+  f_W(s) &= \sum_{k=1}^{\infty} \Big(\dfrac{\mu}{s+\mu}\Big)^k \alpha_k = \sum_{k=1}^{\infty} \Big(\dfrac{\mu}{s+\mu}\Big)^k \pi_k \\
+         &= \sum_{k=1}^{\infty} \Big(\dfrac{\mu}{s+\mu}\Big)^k (1-\rho) \rho^k = (1-\rho) \sum_{k=1}^{\infty} \Big(\dfrac{\lambda}{s+\mu}\Big)^k \\
+         &= (1-\rho) \Big(-1 + \sum_{k=0}^{\infty} \Big(\dfrac{\lambda}{s+\mu}\Big)^k\Big) = (1-\rho) \Big(-1 + \dfrac{1}{1-\dfrac{\lambda}{s+\mu}}\Big) \\
+         &= (1-\rho)\Big(-1 + \dfrac{s+\mu}{s+\mu-\lambda}\Big) = (1-\rho) \dfrac{\lambda}{s+\mu-\lambda}
+\end{align*}
+
+Where the arriving packet $k+1$ observes the system being in state $k$ with
+probability $\alpha_k$ is equal to the probability that the system is indeed in
+state $k$, $\pi_k$, due to the PASTA property.
+
+Turning $f_W(s)$ in the time domain, we get
+
+\begin{align*}
+  f_W(t) &= (1-\rho) \lambda e^{-(\mu - \lambda)t} = (1-\dfrac{\lambda}{\mu}) \lambda e^{-(\mu - \lambda)t} \\
+         &= \rho(\mu - \lambda) e^{-(\mu - \lambda)t}
+\end{align*}
+
+The CDF of the waiting time $W$ for packet $k+1$ is thus
+
+$$F_W(t) = P(W \leq t) = 1 - \rho e^{-(\mu - \lambda)t}$$
+
+since $F_W(\infty) = 1$ and $F_W(0) = 1-\rho = \pi_0$
+
+The probability that an arriving packet waits in the queue more than $T = 5$ms
+before being transmitted is
+
+\begin{align*}
+  P(W > T) &= 1 - P(W \leq T) = 1- (1-\rho e^{-(\mu - \lambda)T}) = \dfrac{\lambda}{\mu}e^{-(\mu - \lambda)T} \\
+           &= \dfrac{500}{1000} e^{-(1000 - 500) 5 \cdot 10^{-3}} = 0.5 e^{-2.5} = 0.041
+\end{align*}
