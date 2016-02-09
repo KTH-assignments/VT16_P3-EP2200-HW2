@@ -1,6 +1,6 @@
 For the missing pieces of the diagonal of the state transition intensity matrix,
 the following equation holds:
-$$q_{i,i} = -\sum_{i \neq j} q_{i,j}$$
+$$q_{i,i} = -q_i = -\sum_{i \neq j} q_{i,j}$$
 
 Hence matrix $Q$ is formed as
 
@@ -20,6 +20,18 @@ Hence matrix $Q$ is formed as
 	\caption{The Markovian chain corresponding to the above $Q$ matrix}
 \end{figure}
 
+Given a state $s$ that can transition to states $\{s_i\}$, the time the
+system spends in state $s$ is an exponentially distributed random variable
+$T = min(\{s_i\})$, which means that its parameter will be
+$\lambda = \sum \lambda_{s \rightarrow s_i}$, and the mean time the system
+spends in $s$ will be $\overline{T} = \frac{1}{\lambda}$.
+
+Ergo, $\overline{T}_1 = \frac{1}{1+1} = 0.5$ sec,
+$\overline{T}_2 = \frac{1}{1+3} = 0.25$ sec,
+$\overline{T}_3 = \frac{1}{3} = 0.33$ sec, and
+$\overline{T}_4 = \frac{1}{3} = 0.33$ sec.
+
+
 In steady state $[\pi_1\ \pi_2\ \pi_3\ \pi_4] \cdot \mathbf{Q} = \mathbf{0}$,
 where $\pi_i$ is the probability of the radio being in state $i$. Solving the
 system of equations gives
@@ -29,9 +41,3 @@ Hence there is a probability of $\frac{3}{16}=18.75\%$ that the radio is in
 stand-by, $\frac{3}{8}=37.5\%$ that the radio is listening to the radio channel
 for incoming packets, or receiving a packet, and $\frac{1}{16} = 6.25\%$ that
 the radio is transmitting a packet.
-
-This means that if we observe the state distribution of the radio over a period
-of time $T$, then as $T$ approaches infinity, we will observe that the radio is
-in state 1 for $0.1875T$ time units, in state 2 for $0.375T$ time units, as is
-also the case for the time spent in state 3, and in state 4 for $0.0625T$ time
-units.
