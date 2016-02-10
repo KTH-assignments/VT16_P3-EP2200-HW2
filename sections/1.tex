@@ -11,5 +11,9 @@ The probability that $k$ packets are transmitted in a time interval of
 $\Delta t = 10\ \text{ms}$ is
 $$P_k = \dfrac{(\lambda \Delta t)^k}{k!}e^{-\lambda \Delta t} = \dfrac{10^k}{k!}e^{-10}$$
 
-The average number of packets in a block is
-$$E[P] = \lambda \Delta t = 10\ \text{packets/block}$$
+The average number of packets arriving inside an interval of
+$\Delta t = 10\ \text{ms}$ is
+$$E[P] = \lambda \Delta t = 10\ \text{packets / block}$$
+
+Hence the average number of packets in a block is $\overline{B} = 1 + E[P] = 11$ packets / block,
+since the system waits for 10 ms after the arrival of the first packet of the block.

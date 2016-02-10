@@ -56,7 +56,7 @@ The average number of packets waiting for transmission $N_q$ is the average
 number of packets in the queue, which is
 
 \begin{equation}
-  N_q = N - N_s
+  N_q = N - N_s = \sum_{i=1}^{\infty} (i-1) p_i
   \label{eq:4.1}
 \end{equation}
 
@@ -85,7 +85,7 @@ $$N_q = 1 - 0.5 = 0.5\ \text{packets}$$
 
 c)
 The probability of at least $n$ packets existing in the system is equal to that
-of 1 minus the probability of $n-1$ existing in the system at most:
+of 1 minus the probability of at most $n-1$ packets existing in the system:
 $$P(k \geq n) = 1 - P(k < n) = 1 - P(k \leq n-1)$$
 
 But
@@ -112,8 +112,9 @@ independent of all $X_j, i \neq j$ describing the service time of the $i^{th}$
 packet, then the waiting time for packet $k+1$ will be the sum of $X_i$:
 $$W = X_1 + X_2 + \dots + X_k = \sum_{i=1}^{k}X_i$$
 
-The addition of $X_1$, although the first packet is assumed to be in transmission
-is made because of the memoryless property of the exponential distribution.
+The addition of $X_1$, although the first packet is assumed to be already
+under transmission, is made because of the memoryless property of the exponential
+distribution.
 
 This summation of random variables denotes their convolution in time, or
 multiplication in the (continuous) Laplace domain. The probability density
@@ -124,7 +125,7 @@ and its Laplace transform is
 
 $$f^{*}_{T_i}(s) = \mu \dfrac{1}{s+\mu}$$
 
-Hence the probability density function of the waiting time $W$ of packet $k+1$ in
+Hence, the probability density function of the waiting time $W$ of packet $k+1$ in
 the Laplace domain, given that there are $k$ packets in the system is
 
 $$f_W(s | k) = \prod_{i=1}^k f^{*}_{T_i}(s) = \prod_{i=1}^k \dfrac{\mu}{s+\mu} = \Big(\dfrac{\mu}{s+\mu}\Big)^k$$
@@ -141,7 +142,7 @@ transmission in the server
          &= (1-\rho)\Big(-1 + \dfrac{s+\mu}{s+\mu-\lambda}\Big) = (1-\rho) \dfrac{\lambda}{s+\mu-\lambda}
 \end{align*}
 
-Where the arriving packet $k+1$ observes the system being in state $k$ with
+where the arriving packet $k+1$ observes the system being in state $k$ with
 probability $\alpha_k$ is equal to the probability that the system is indeed in
 state $k$, $\pi_k$, due to the PASTA property.
 
